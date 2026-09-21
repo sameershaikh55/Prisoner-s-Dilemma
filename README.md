@@ -10,12 +10,14 @@ The Prisoner's Dilemma is a classic game theory problem. In this iterated versio
 * **Both Defect (False, False):** 2 points each
 * **One Cooperates, One Defects:** Cooperator gets 5 points, Defector gets 1 point
 
-## My Agent's Strategy: Random
-The agent now uses a purely random strategy, disregarding the tournament's phases or any historical data.
+## My Agent's Strategy: "Ultimate OPM"
+My agent (`agentUltimateOPM`) uses a hybrid strategy that combines short-term defense with long-term classification:
 
-* For every round, whether it's during the learning (burn-in) phase or the scoring phase, it makes its decision by generating a random number.
-* It chooses to cooperate with a 50% probability and defect with a 50% probability.
-* It does not track or react to the opponent's previous moves.
+1. **First Round:** Always starts by cooperating.
+2. **Fast & Frugal Defense (Short-term memory):** If the opponent defected in the very last round, the agent immediately defects. This prevents continuous exploitation by sneaky or unpredictable opponents.
+3. **Long-Term Classifier:** If the opponent cooperated in the last round, the agent looks at the opponent's entire history:
+   * If the opponent has *always* cooperated, the agent cooperates.
+   * If the opponent's history is mixed, the agent calculates their historical probability of cooperating ($p$). The agent will only cooperate if this probability is strictly greater than **75%**. Otherwise, it defects to protect itself.
 
 ## Tech Stack & Setup
 * **Language:** Python 3.11
