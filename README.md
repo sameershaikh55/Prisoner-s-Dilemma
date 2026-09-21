@@ -10,14 +10,12 @@ The Prisoner's Dilemma is a classic game theory problem. In this iterated versio
 * **Both Defect (False, False):** 2 points each
 * **One Cooperates, One Defects:** Cooperator gets 5 points, Defector gets 1 point
 
-## My Agent's Strategy: "Explore & Exploit"
-This agent is built to handle the tournament's two distinct phases:
+## My Agent's Strategy: Random
+The agent now uses a purely random strategy, disregarding the tournament's phases or any historical data.
 
-1. **The Learning Phase (Burn-in):** 
-   The first 500 rounds are unscored. Instead of playing randomly, my agent uses this phase to "probe" the opponent. It plays a set pattern (3 Cooperations followed by 2 Defections) to observe exactly how the opponent reacts to both loyalty and betrayal.
-   
-2. **The Scoring Phase:** 
-   In the final 25 scored rounds, the agent stops testing and analyzes the data collected. It calculates the opponent's probability of cooperating ($p$). Using expected utility math, the agent only cooperates if the opponent's probability of cooperation is strictly greater than **75%**. Otherwise, it defaults to defection to protect itself from receiving the 5-point penalty.
+* For every round, whether it's during the learning (burn-in) phase or the scoring phase, it makes its decision by generating a random number.
+* It chooses to cooperate with a 50% probability and defect with a 50% probability.
+* It does not track or react to the opponent's previous moves.
 
 ## Tech Stack & Setup
 * **Language:** Python 3.11
