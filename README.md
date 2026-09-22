@@ -10,14 +10,24 @@ The Prisoner's Dilemma is a classic game theory problem. In this iterated versio
 * **Both Defect (False, False):** 2 points each
 * **One Cooperates, One Defects:** Cooperator gets 5 points, Defector gets 1 point
 
-## My Agent's Strategy: "Explore & Exploit"
-This agent is built to handle the tournament's two distinct phases:
+## My Agent's Strategy: "OPM"
+My agent (`agentOPM`) uses a hybrid strategy that combines short-term defense with long-term classification:
 
-1. **The Learning Phase (Burn-in):** 
-   The first 500 rounds are unscored. Instead of playing randomly, my agent uses this phase to "probe" the opponent. It plays a set pattern (3 Cooperations followed by 2 Defections) to observe exactly how the opponent reacts to both loyalty and betrayal.
-   
-2. **The Scoring Phase:** 
-   In the final 25 scored rounds, the agent stops testing and analyzes the data collected. It calculates the opponent's probability of cooperating ($p$). Using expected utility math, the agent only cooperates if the opponent's probability of cooperation is strictly greater than **75%**. Otherwise, it defaults to defection to protect itself from receiving the 5-point penalty.
+1. **First Round:** Always starts by cooperating.
+2. **Fast & Frugal Defense (Short-term memory):** If the opponent defected in the very last round, the agent immediately defects. This prevents continuous exploitation by sneaky or unpredictable opponents.
+3. **Long-Term Classifier:** If the opponent cooperated in the last round, the agent looks at the opponent's entire history:
+   * If the opponent has *always* cooperated, the agent cooperates.
+   * If the opponent's history is mixed, the agent calculates their historical probability of cooperating ($p$). The agent will only cooperate if this probability is strictly greater than **75%**. Otherwise, it defects to protect itself.
+
+## Testing Environment Branch
+While the `master` branch only contains the final `agentOPM` code, you can find the complete testing environment in the `testing-environment` branch. That branch includes a variety of opponents used to stress-test `agentOPM` during development, such as:
+* `agentRandom`
+* `agentCooperate` and `agentDefect`
+* `agentTitForTat`
+* `agentGrimTrigger`
+* `agentSneaky`, `agentJester`, and others
+
+Switch to the `testing-environment` branch if you wish to see how the agent was trained and evaluated against these diverse strategies.
 
 ## Tech Stack & Setup
 * **Language:** Python 3.11
